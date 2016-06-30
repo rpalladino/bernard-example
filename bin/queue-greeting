@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+use Bernard\Message\DefaultMessage;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$container = new Container();
+$languages = $container['languages'];
+
+if (count($argv) < 3 || ! in_array($argv[2], $languages)) {
+	exit("Usage: {$argv[0]} name " . implode('|', $languages) . "\n");
+}
+
+$name = $argv[1];
+$language = ucfirst($argv[2]);
+
+$producer = $container['bernard:producer'];
+$producer->produce(new DefaultMessage("GreetIn{$language}", ['name' => $name]));
+
+echo "Queued greeting for {$name} in {$language}\n";

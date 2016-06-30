@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+$container = new Container();
+$languages = $container['languages'];
+
+if (! isset($argv[1]) or ! in_array($argv[1], $languages)) {
+	exit("Usage: {$argv[0]} " . implode('|', $languages) . "\n");
+}
+
+$language = $argv[1];
+
+$consumer = $container['bernard:consumer'];
+$factory = $container['bernard:factory'];
+$consumer->consume($factory->create("greet-in-$language"), [
+	'max-runtime' => 500,
+]);

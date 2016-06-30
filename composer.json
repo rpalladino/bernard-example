@@ -1,0 +1,10 @@
+{
+    "require": {
+        "bernard/bernard": "^1.0.0-alpha3",
+        "predis/predis": "^1.1",
+        "pimple/pimple": "^1.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
